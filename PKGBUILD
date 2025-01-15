@@ -32,6 +32,8 @@ license=(
   'AGPL3'
 )
 depends=(
+  'evm-contracts-tools'
+  'evm-wallet'
   'libcrash-bash'
   'libevm'
   'ur-contracts'
