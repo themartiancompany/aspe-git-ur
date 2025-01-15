@@ -4,47 +4,50 @@
 # Maintainer:  Pellegrino Prevete <pellegrinoprevete@gmail.com>
 # Contributor: Marcell Meszaros (MarsSeed) <marcell.meszaros@runbox.eu>
 
-_git=false
-_local=false
+_git="false"
+_local="false"
+_offline="false"
 _proj="hip"
-_pkgname=aspe
+_pkg=aspe
+_pkgname="${_pkg}"
 pkgname="${_pkgname}-git"
 pkgver="1.1.1.1.r1.g2cd7bc8640842f7d1e87fc6d3f6d64077df798a3"
 pkgrel=1
 _pkgdesc=(
-  "Arch Linux build source"
-  "file clone tool"
+  "Build recipes retrieval"
+  "tool."
 )
 pkgdesc="${_pkgdesc[*]}"
 arch=(
-  any
+  'any'
 )
 _gl="gitlab.com"
 _gh="github.com"
 _host="https://${_gh}"
 _ns='themartiancompany'
-_local="${HOME}/${_pkgname}"
-url="${_host}/${_ns}/${_pkgname}"
-_gh_api="https://api.${_gh}/repos/${_ns}/${_pkgname}"
+_local="${HOME}/${_pkg}"
+url="${_host}/${_ns}/${_pkg}"
+_gh_api="https://api.${_gh}/repos/${_ns}/${_pkg}"
 license=(
-  AGPL3
+  'AGPL3'
 )
 depends=(
-  bash
-  git
+  'libcrash-bash'
+  'git'
+  'ur'
 )
 makedepends=(
 )
 checkdepends=(
-  shellcheck
+  'shellcheck'
 )
 optdepends=(
 )
 provides=(
-  "${_pkgname}=${pkgver}"
+  "${_pkg}=${pkgver}"
 )
 conflicts=(
-  "${_pkgname}"
+  "${_pkg}"
 )
 groups=(
  "${_proj}"
@@ -55,23 +58,23 @@ _url="${url}"
   _url="${_local}"
 source=()
 _branch="master"
-[[ "${_git}" == true ]] && \
+if [[ "${_git}" == true ]]; then
   makedepends+=(
-    git
-  ) && \
-  source+=(
-    "${_pkgname}-${_branch}::git+${_url}#branch=${_branch}"
+    'git'
   )
-[[ "${_git}" == false ]] && \
+  _src="${_pkg}-${_branch}::git+${_url}#branch=${_branch}"
+elif [[ "${_git}" == false ]]; then
   makedepends+=(
-    curl
-    jq
-  ) && \
-  source+=(
-    "${_pkgname}.tar.gz::${_url}/archive/refs/heads/${_branch}.tar.gz"
+    'curl'
+    'jq'
   )
+  _src="${_pkg}-${_branch}.tar.gz::${_url}/archive/refs/heads/${_branch}.tar.gz"
+fi
+source=(
+  "${_src}"
+)
 sha256sums=(
-  SKIP
+  'SKIP'
 )
 
 _nth() {
@@ -165,7 +168,7 @@ _git_pkgver() {
 
 pkgver() {
   cd \
-    "${_pkgname}-${_branch}"
+    "${_pkg}-${_branch}"
   if [[ "${_git}" == true ]]; then
     _git_pkgver
   elif [[ "${_git}" == false ]]; then
@@ -175,7 +178,7 @@ pkgver() {
 
 package() {
   cd \
-    "${_pkgname}-${_branch}"
+    "${_pkg}-${_branch}"
   make \
     DESTDIR="${pkgdir}" \
     PREFIX="/usr" \
