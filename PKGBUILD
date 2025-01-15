@@ -34,6 +34,7 @@ license=(
 depends=(
   'evm-contracts-tools'
   'evm-wallet'
+  'evmfs'
   'libcrash-bash'
   'libevm'
   'ur-contracts'
