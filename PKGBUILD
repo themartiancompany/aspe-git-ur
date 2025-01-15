@@ -33,15 +33,18 @@ license=(
 )
 depends=(
   'libcrash-bash'
-  'git'
+  'libevm'
+  'ur-contracts'
   'ur'
 )
 makedepends=(
+  'make'
 )
 checkdepends=(
   'shellcheck'
 )
 optdepends=(
+  'git: to download sources from censorable sources.'
 )
 provides=(
   "${_pkg}=${pkgver}"
