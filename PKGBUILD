@@ -5,7 +5,6 @@
 # Contributor: Marcell Meszaros (MarsSeed) <marcell.meszaros@runbox.eu>
 
 _git="false"
-_local="false"
 _offline="false"
 _proj="hip"
 _pkg=aspe
@@ -60,7 +59,7 @@ groups=(
  "${_proj}-git"
 )
 _url="${url}"
-[[ "${_local}" == true ]] && \
+[[ "${_offline}" == true ]] && \
   _url="${_local}"
 source=()
 _branch="master"
